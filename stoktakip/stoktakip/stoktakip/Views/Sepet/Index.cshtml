@@ -1,0 +1,51 @@
+﻿@model List<stoktakip.Models.Sepet>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Session["Ad"]</h2>
+<h3>Sepetim</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ürün bilgisi</th>
+            <th>Adet</th>
+            <th>Fiyat</th>
+            <th>Tarih</th>
+            <th>Resim</th>
+            <th>Sil</th>
+            <th>Satın Al</th>
+        </tr>
+    </thead>
+    <tody>
+        @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Urun.ad</td>
+                    <td>@item.adet</td>
+                    <td>@item.fiyat</td>
+                    <td>@Convert.ToDateTime(item.tarih).ToString("dd/MM/yyyy")</td>
+                    <td><img src="~/Content/Image/@item.Urun.resim" width="90" height="90" /></td>
+                    @if (User.IsInRole("U"))
+                    {
+                        <td>@Html.ActionLink("Sil", "Sil", new { id = item.id }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek istiyor musunuz?')" })</td>
+                        <td><a href="/Satis/SatinAl/@item.id" class="btn btn-success">Satın Al</a></td>
+                    }
+
+                </tr>
+            }
+    </tody>
+</table>
+<div class="container">
+    @ViewBag.Tutar
+</div>
+<br />
+
+<div class="forn-group">
+    <a href="/Satis/HepsiniSatinAl" class="btn btn-success form-control">Tümünü Satın Al</a>
+</div>
+
+
+
+  

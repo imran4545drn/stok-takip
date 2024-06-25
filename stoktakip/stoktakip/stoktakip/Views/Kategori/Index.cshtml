@@ -1,0 +1,41 @@
+﻿@using stoktakip.Models
+@model List<Kategori>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<a href="@Url.Action("Ekle", "Kategori")" class="btn btn-primary">Ekle</a>
+<br />
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Açıklama</th>
+            @if (User.IsInRole("A"))
+            {
+                <th>İşlemler</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ad</td>
+                <td>@item.aciklama</td>
+                @if (User.IsInRole("A"))
+                {
+                    <td>
+                        @Html.ActionLink("Düzenle", "Guncelle", new { id = item.id }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Sil", "Sil", new { id = item.id }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Silmek istiyor musunuz?')" })
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+4

@@ -1,0 +1,33 @@
+﻿@using stoktakip.Models
+@model List<Urun>
+@{
+    ViewBag.Title = "KritikStok";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>ürün bilgisi</th>
+        <th>Stok</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        if (item.stok < 50)
+        {
+            <tr style="background-color:red">
+                <td>@item.ad</td>
+                <td>@item.stok</td>
+            </tr>
+        }
+        if (item.stok == 50)
+            {
+            <tr style="background-color:yellow">
+                <td>@item.ad</td>
+                <td>@item.stok</td>
+            </tr>
+
+        }
+
+    }
+</table>
+

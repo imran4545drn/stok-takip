@@ -1,0 +1,41 @@
+﻿@model stoktakip.Models.Kullanici
+@{
+    Layout = null;
+}
+
+
+
+
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<form method="post" action="/Kullanici/Guncelle1">
+    <div class="container">
+        <br />
+        <div class="form-group">
+            <label>Ad</label>
+            <input type="text" name="ad" class="form-control" value="@Model.ad" />
+        </div>
+        <div class="form-group">
+            <label>Soyad</label>
+            <input type="text" name="soyad" class="form-control" value="@Model.soyad" />
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" name="email" class="form-control" value="@Model.email" />
+        </div>
+        <div class="form-group">
+            <label>Kullanıcı Adı</label>
+            <input type="text" name="kullaniciad" class="form-control" value="@Model.kullaniciad" />
+        </div>
+        <div class="form-group">
+            <label>Şifre</label>
+            <input type="password" name="sifre" class="form-control" value="@Model.sifre" />
+        </div>
+        <div class="form-group">
+            <label>Şifre Tekrar</label>
+            <input type="password" name="sifretekrar" class="form-control" value="@Model.sifretekrar" />
+        </div>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>

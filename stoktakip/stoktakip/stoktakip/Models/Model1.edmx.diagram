@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="909f3ef3b0c0405fa38156d80bf2cd4e" Name="Diagram1">
+        <EntityTypeShape EntityType="Takip_SistemiModel.Kategori" Width="1.5" PointX="5.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Takip_SistemiModel.Kullanici" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Takip_SistemiModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Takip_SistemiModel.Sepet" Width="1.5" PointX="10.25" PointY="1.875" />
+        <AssociationConnector Association="Takip_SistemiModel.FK_Sepet_Kullanici" />
+        <EntityTypeShape EntityType="Takip_SistemiModel.Satislar" Width="1.5" PointX="13.25" PointY="1.875" />
+        <EntityTypeShape EntityType="Takip_SistemiModel.Urun" Width="1.5" PointX="8" PointY="0.875" />
+        <AssociationConnector Association="Takip_SistemiModel.FK_Urun_Kategori" />
+        <AssociationConnector Association="Takip_SistemiModel.FK_Satislar_Kullanici" />
+        <AssociationConnector Association="Takip_SistemiModel.FK_Satislar_Urun" />
+        <AssociationConnector Association="Takip_SistemiModel.FK_Sepet_Urun" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

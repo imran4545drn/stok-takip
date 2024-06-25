@@ -1,0 +1,45 @@
+﻿@using stoktakip.Models
+@model List<Sepet>
+@{
+    ViewBag.Title = "Hepsini Satin Al";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="container">
+        <h2>Merhaba @Session["ad"] @Session["soyad"], satın alma sayfasına hoşgeldiniz</h2>
+    </div>
+
+    <div class="container">
+        @using (Html.BeginForm("HepsiniSatinAl2", "Satis", FormMethod.Post, new { @class = "container" }))
+        {
+            foreach (var item in Model)
+            {
+                <div class="form-group">
+                    <h5>ID: @Html.DisplayFor(modelItem => item.id)</h5>
+                </div>
+                <div class="form-group">
+                    <h5>Ürün Adı: @Html.DisplayFor(modelItem => item.Urun.ad)</h5>
+                </div>
+                <div class="form-group">
+                    <h5>Adet: @Html.DisplayFor(modelItem => item.adet)</h5>
+                </div>
+                <div class="form-group">
+                    <h5>Fiyat: @Html.DisplayFor(modelItem => item.fiyat)</h5>
+                </div>
+                <div class="form-group">
+                    <h5>Resim: <img src="~/Content/Image/@item.Urun.resim" width="80" height="80" /></h5>
+                </div>
+            }
+            <p style="color:red; text-align:center">@ViewBag.Tutar</p>
+            <div class="container">
+                <div class="form-group" style="float:left">
+                    <button class="btn btn-success">Onay</button>
+                </div>
+                <div style="float:right">
+                    <a href="/Sepet/Index" class="btn btn-danger">İptal</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

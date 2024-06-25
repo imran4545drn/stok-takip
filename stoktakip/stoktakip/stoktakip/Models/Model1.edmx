@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Takip_SistemiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="aciklama" Type="nvarchar" MaxLength="50" />
+          <Property Name="durum" Type="bit" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="kullaniciad" Type="nvarchar" MaxLength="50" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="sifretekrar" Type="nvarchar" MaxLength="50" />
+          <Property Name="rol" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Satislar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urunid" Type="int" />
+          <Property Name="adet" Type="int" />
+          <Property Name="fiyat" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="tarih" Type="datetime" />
+          <Property Name="resim" Type="nvarchar" MaxLength="50" />
+          <Property Name="kullaniciid" Type="int" />
+        </EntityType>
+        <EntityType Name="Sepet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urunid" Type="int" />
+          <Property Name="adet" Type="int" />
+          <Property Name="fiyat" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="tarih" Type="datetime" />
+          <Property Name="resim" Type="nvarchar" MaxLength="50" />
+          <Property Name="kullaniciid" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="aciklama" Type="nvarchar" MaxLength="50" />
+          <Property Name="fiyat" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="stok" Type="int" />
+          <Property Name="populer" Type="bit" />
+          <Property Name="resim" Type="nvarchar" MaxLength="50" />
+          <Property Name="kategoriid" Type="int" />
+        </EntityType>
+        <Association Name="FK_Satislar_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="Satislar" Type="Self.Satislar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Satislar">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satislar_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="0..1" />
+          <End Role="Satislar" Type="Self.Satislar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Satislar">
+              <PropertyRef Name="urunid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sepet_Kullanici">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="0..1" />
+          <End Role="Sepet" Type="Self.Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sepet_Urun">
+          <End Role="Urun" Type="Self.Urun" Multiplicity="0..1" />
+          <End Role="Sepet" Type="Self.Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="urunid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Urun_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
+          <End Role="Urun" Type="Self.Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="kategoriid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Takip_SistemiModelStoreContainer">
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Satislar" EntityType="Self.Satislar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sepet" EntityType="Self.Sepet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Urun" EntityType="Self.Urun" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Satislar_Kullanici" Association="Self.FK_Satislar_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Satislar" EntitySet="Satislar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satislar_Urun" Association="Self.FK_Satislar_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Satislar" EntitySet="Satislar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sepet_Kullanici" Association="Self.FK_Sepet_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sepet_Urun" Association="Self.FK_Sepet_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Urun_Kategori" Association="Self.FK_Urun_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Takip_SistemiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="durum" Type="Boolean" />
+          <NavigationProperty Name="Urun" Relationship="Takip_SistemiModel.FK_Urun_Kategori" FromRole="Kategori" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kullaniciad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sifretekrar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sepet" Relationship="Takip_SistemiModel.FK_Sepet_Kullanici" FromRole="Kullanici" ToRole="Sepet" />
+          <NavigationProperty Name="Satislar" Relationship="Takip_SistemiModel.FK_Satislar_Kullanici" FromRole="Kullanici" ToRole="Satislar" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityContainer Name="Takip_SistemiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Sepet" EntityType="Takip_SistemiModel.Sepet" />
+          <AssociationSet Name="FK_Sepet_Kullanici" Association="Takip_SistemiModel.FK_Sepet_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+          <EntitySet Name="Satislar" EntityType="Takip_SistemiModel.Satislar" />
+          <EntitySet Name="Urun" EntityType="Takip_SistemiModel.Urun" />
+          <AssociationSet Name="FK_Urun_Kategori" Association="Takip_SistemiModel.FK_Urun_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Urun" EntitySet="Urun" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satislar_Kullanici" Association="Takip_SistemiModel.FK_Satislar_Kullanici">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Satislar" EntitySet="Satislar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satislar_Urun" Association="Takip_SistemiModel.FK_Satislar_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Satislar" EntitySet="Satislar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sepet_Urun" Association="Takip_SistemiModel.FK_Sepet_Urun">
+            <End Role="Urun" EntitySet="Urun" />
+            <End Role="Sepet" EntitySet="Sepet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Sepet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urunid" Type="Int32" />
+          <Property Name="adet" Type="Int32" />
+          <Property Name="fiyat" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="tarih" Type="DateTime" Precision="3" />
+          <Property Name="resim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kullaniciid" Type="Int32" />
+          <NavigationProperty Name="Kullanici" Relationship="Takip_SistemiModel.FK_Sepet_Kullanici" FromRole="Sepet" ToRole="Kullanici" />
+          <NavigationProperty Name="Urun" Relationship="Takip_SistemiModel.FK_Sepet_Urun" FromRole="Sepet" ToRole="Urun" />
+        </EntityType>
+        <Association Name="FK_Sepet_Kullanici">
+          <End Type="Takip_SistemiModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
+          <End Type="Takip_SistemiModel.Sepet" Role="Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Satislar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urunid" Type="Int32" />
+          <Property Name="adet" Type="Int32" />
+          <Property Name="fiyat" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="tarih" Type="DateTime" Precision="3" />
+          <Property Name="resim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kullaniciid" Type="Int32" />
+          <NavigationProperty Name="Kullanici" Relationship="Takip_SistemiModel.FK_Satislar_Kullanici" FromRole="Satislar" ToRole="Kullanici" />
+          <NavigationProperty Name="Urun" Relationship="Takip_SistemiModel.FK_Satislar_Urun" FromRole="Satislar" ToRole="Urun" />
+        </EntityType>
+        <EntityType Name="Urun">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fiyat" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="stok" Type="Int32" />
+          <Property Name="populer" Type="Boolean" />
+          <Property Name="resim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kategoriid" Type="Int32" />
+          <NavigationProperty Name="Kategori" Relationship="Takip_SistemiModel.FK_Urun_Kategori" FromRole="Urun" ToRole="Kategori" />
+          <NavigationProperty Name="Satislar" Relationship="Takip_SistemiModel.FK_Satislar_Urun" FromRole="Urun" ToRole="Satislar" />
+          <NavigationProperty Name="Sepet" Relationship="Takip_SistemiModel.FK_Sepet_Urun" FromRole="Urun" ToRole="Sepet" />
+        </EntityType>
+        <Association Name="FK_Urun_Kategori">
+          <End Type="Takip_SistemiModel.Kategori" Role="Kategori" Multiplicity="0..1" />
+          <End Type="Takip_SistemiModel.Urun" Role="Urun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Urun">
+              <PropertyRef Name="kategoriid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satislar_Kullanici">
+          <End Type="Takip_SistemiModel.Kullanici" Role="Kullanici" Multiplicity="0..1" />
+          <End Type="Takip_SistemiModel.Satislar" Role="Satislar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Satislar">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satislar_Urun">
+          <End Type="Takip_SistemiModel.Urun" Role="Urun" Multiplicity="0..1" />
+          <End Type="Takip_SistemiModel.Satislar" Role="Satislar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Satislar">
+              <PropertyRef Name="urunid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sepet_Urun">
+          <End Type="Takip_SistemiModel.Urun" Role="Urun" Multiplicity="0..1" />
+          <End Type="Takip_SistemiModel.Sepet" Role="Sepet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Urun">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sepet">
+              <PropertyRef Name="urunid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Takip_SistemiModelStoreContainer" CdmEntityContainer="Takip_SistemiEntities">
+          <EntitySetMapping Name="Kategori">
+            <EntityTypeMapping TypeName="Takip_SistemiModel.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="durum" ColumnName="durum" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanici">
+            <EntityTypeMapping TypeName="Takip_SistemiModel.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="soyad" ColumnName="soyad" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="kullaniciad" ColumnName="kullaniciad" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+                <ScalarProperty Name="sifretekrar" ColumnName="sifretekrar" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Takip_SistemiModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sepet">
+            <EntityTypeMapping TypeName="Takip_SistemiModel.Sepet">
+              <MappingFragment StoreEntitySet="Sepet">
+                <ScalarProperty Name="kullaniciid" ColumnName="kullaniciid" />
+                <ScalarProperty Name="resim" ColumnName="resim" />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+                <ScalarProperty Name="urunid" ColumnName="urunid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Satislar">
+            <EntityTypeMapping TypeName="Takip_SistemiModel.Satislar">
+              <MappingFragment StoreEntitySet="Satislar">
+                <ScalarProperty Name="kullaniciid" ColumnName="kullaniciid" />
+                <ScalarProperty Name="resim" ColumnName="resim" />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="adet" ColumnName="adet" />
+                <ScalarProperty Name="urunid" ColumnName="urunid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Urun">
+            <EntityTypeMapping TypeName="Takip_SistemiModel.Urun">
+              <MappingFragment StoreEntitySet="Urun">
+                <ScalarProperty Name="kategoriid" ColumnName="kategoriid" />
+                <ScalarProperty Name="resim" ColumnName="resim" />
+                <ScalarProperty Name="populer" ColumnName="populer" />
+                <ScalarProperty Name="stok" ColumnName="stok" />
+                <ScalarProperty Name="fiyat" ColumnName="fiyat" />
+                <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
